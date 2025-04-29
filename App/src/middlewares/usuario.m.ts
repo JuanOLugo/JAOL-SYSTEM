@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: "pisstreamer@gmail.com", //your email address
-    pass: "xwrb pnzu dyjl kfbq", // or your App Password if using Gmail with 2FA
+    user: process.env.email || "pisstreamer@gmail.com", //your email address
+    pass: process.env.password || "xwrb pnzu dyjl kfbq", // or your App Password if using Gmail with 2FA
   },
   tls: {
     rejectUnauthorized: false, // should be set to true in production
@@ -143,7 +143,7 @@ export const GetTotalDashboard = async (
     const Productos = await ProductoModel.find({ usuariocontenedor: _id });
 
     // Convertir "day/month/year" a "YYYY-MM-DD"
-    const [day, month, year] = date.split("/"); 
+    const [day, month, year] = date.split("/");
     const formattedDate = new Date(`${year}-${month}-${day}`);
 
     const mes = formattedDate.getMonth() + 1; // Obtener mes correcto (1-12)
@@ -259,7 +259,7 @@ export const VerificarCodigo = async (
   if (!VerificarUsuario) return res.status(400).send({ msg: "User not found" });
 
   const codeObject = codes.find((c) => {
-    return c.code === code ;
+    return c.code === code;
   });
   console.log(codeObject);
   if (!codeObject) return res.status(400).send({ msg: "Invalid code" });
