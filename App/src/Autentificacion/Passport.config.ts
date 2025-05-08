@@ -3,8 +3,9 @@ import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
 import UsuarioModel from "../BaseDeDatos/Modelos/Usuario.model";
 
 // Configuracion de la estrategia
+if(!process.env.SECRETAUTH) throw new Error("No se ha definido la variable de entorno SECRETAUTH")
 const NuevaEstrategia: StrategyOptions = {
-  secretOrKey: process.env.SECRETAUTH ?? "123456789",
+  secretOrKey: process.env.SECRETAUTH ,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 

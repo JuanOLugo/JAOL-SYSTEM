@@ -22,7 +22,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const SECRET_KEY = process.env.SECRET_KEY ?? "123456789";
+if (!process.env.SECRET_KEY) throw new Error("No se ha definido la variable de entorno SECRET_KEY");
+const SECRET_KEY = process.env.SECRET_KEY;
 
 type Code = {
   code: string;

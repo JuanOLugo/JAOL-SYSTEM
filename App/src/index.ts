@@ -7,6 +7,8 @@ import usuarioRutas from "./Rutas/usuario.rutas";
 import productoRutas from "./Rutas/productos.rutas";
 import facturasRutas from "./Rutas/facturas.rutas";
 import vendedorRutas from "./Rutas/vendedor.rutas";
+import { config } from "dotenv";
+config()
 const app = express();
 
 // middlewares necesarios para el servidor
@@ -30,7 +32,8 @@ app.get("*", (req, res) =>
 );
 
 //Configuracion del servidor & puerto
-const server_port = parseInt(process.env.PORT ?? "5000");
+if(!process.env.PORT) throw new Error("No se ha definido la variable de entorno PORT")
+const server_port = parseInt(process.env.PORT);
 app.listen(server_port, () => {
   console.log("Servidor esta activo en el puerto:", server_port);
   conexionDbPrincipal();
